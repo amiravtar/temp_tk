@@ -1,0 +1,19 @@
+[project]
+name = "fani-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Amir Abolhasani", email = "amiravtar@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "ruff>=0.17.5",
+]
+
+[project.scripts]
+fani-python = "fani_python:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"
