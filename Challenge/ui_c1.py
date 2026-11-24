@@ -58,14 +58,25 @@ class TodoList:
         self.task_list.heading("priority", text="priority", anchor="center")
         self.task_list.heading("due date", text="due date", anchor="center")
         self.task_list.heading("status", text="status", anchor="center")
+
+        self.task_list.insert("", tk.END, values=("1", "2", "3", "4"))
+        self.task_list.insert("", tk.END, values=("1", "2", "3", "4"))
+        self.task_list.insert("", tk.END, values=("1", "2", "3", "4"))
         self.task_list.pack(expand=True)
+        self.task_list.bind("<Double-1>", self.tree_view_double_click)
+
+        self.root.bind("<Control-n>", lambda x: print("salam"))
 
     def update_time(self):
         self.date_variable.set(datetime.datetime.now().strftime(DATE_STRING_FORMAT))
         self.root.after(1000, self.update_time)
 
     def add_task(self):
-        add_ui = TaskCrud(tk.Toplevel())
+        add_ui = TaskCrud(tk.Toplevel(self.root))
+
+    def tree_view_double_click(self, event):
+        print(self.task_list.selection())
+        print(self.task_list.item(self.task_list.selection()[0]))
 
 
 class TaskCrud:
@@ -83,30 +94,43 @@ class TaskCrud:
 
     def setup_ui(self):
 
-        self.main_frame=tk.Frame(self.root)
-        self.main_frame.pack(fill="both",padx=10,pady=10)
+        self.main_frame = tk.Frame(self.root)
+        self.main_frame.pack(fill="both", padx=10, pady=10)
 
-        self.lbl1=tk.Label(self.main_frame,text="Title").pack(anchor="w")
+        self.lbl1 = tk.Label(self.main_frame, text="Title").pack(anchor="w")
 
-        self.ent_title=tk.Entry(self.main_frame)
+        self.ent_title = tk.Entry(self.main_frame)
         self.ent_title.pack(fill="x")
 
+        self.selected_p = tk.StringVar(value="Medium")
 
-        self.selected_p=tk.StringVar(value="Medium")
-
-        self.cmb_pri=ttk.Combobox(self.main_frame,textvariable=self.selected_p,values=("High","Medium","Low"),state="readonly")
+        self.cmb_pri = ttk.Combobox(
+            self.main_frame,
+            textvariable=self.selected_p,
+            values=("High", "Medium", "Low"),
+            state="readonly",
+        )
         self.cmb_pri.pack(fill="x")
 
+        self.lbl2 = tk.Label(self.main_frame, text="Due Date yyy-mm-dd").pack(
+            anchor="w"
+        )
 
-        self.lbl2=tk.Label(self.main_frame,text="Due Date yyy-mm-dd").pack(anchor="w")
-
-        self.ent_due_date=tk.Entry(self.main_frame)
+        self.ent_due_date = tk.Entry(self.main_frame)
         self.ent_due_date.pack(fill="x")
 
-        self.is_done=tk.BooleanVar(value=False)
-        self.ckb_is_done=tk.Checkbutton(self.main_frame,text="Is Done",variable=self.is_done)
+        self.is_done = tk.BooleanVar(value=False)
+        self.ckb_is_done = tk.Checkbutton(
+            self.main_frame, text="Is Done", variable=self.is_done
+        )
         self.ckb_is_done.pack(fill="x")
-        
+
+        self.btn_save = tk.Button(
+            self.main_frame, text="Save", command=self.root.destroy
+        )
+        self.btn_save.pack()
+
+
 if __name__ == "__main__":
     root = tk.Tk()
 
