@@ -15,7 +15,7 @@ class CrudWindow(tk.Toplevel):
         self.task = task
 
         self.title("Edit Task" if task else "New Task")
-        self.geometry("380x330")
+        self.geometry("580x530")
         self.resizable(False, False)
         self.transient(parent)
         self.grab_set()
@@ -317,8 +317,8 @@ class ToDoApp:
 if __name__ == "__main__":
     root = tk.Tk()
     print(tkFont.families())
-    default_font=tkFont.Font(family="Aria")
-    default_font.configure(size=50)
+    default_font=tkFont.Font(family="tahoma")
+    default_font.configure(size=20)
     root.option_add("*Font", default_font)
     app = ToDoApp(root)
     root.mainloop()
